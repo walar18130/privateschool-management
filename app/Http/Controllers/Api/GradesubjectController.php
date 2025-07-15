@@ -12,7 +12,7 @@ class GradesubjectController extends Controller
     {
         return response()->json([
             'message' => 'List of grade classes',
-            'data' => Gradesubject::with(['Grade', 'Academicyear'])->get()
+            'data' => Gradesubject::with(['Grade', 'academicyear'])->get()
         ]);        
         
     }
@@ -22,9 +22,9 @@ class GradesubjectController extends Controller
     {
         $validated = $request->validate([
             'grade_id' => 'required|exists:grades,id',
-            'academicyear_id',
+            'academicyear_id' => 'required|exists:academicyears,id', // ✅ include this
             'name' => 'required|string|max:255',
-            'code' => 'required|string|max:50',
+            'code',
         ]);
 
         $subject = Gradesubject::create($validated);
